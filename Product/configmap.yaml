@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-config
+  namespace: microservice
+data:
+  db-port: "3306"

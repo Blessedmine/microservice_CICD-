@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: test-cm
+  name: shopping-cart-config
   namespace: microservice
 data:
-  db-port: "80"
+  db-port: "3306"

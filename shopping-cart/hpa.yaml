@@ -1,0 +1,17 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: shopping-cart-hpa
+spec:
+  Selector:
+    matchLabels:
+      app: shopping-cart
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
