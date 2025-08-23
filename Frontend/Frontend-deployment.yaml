@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: <registry>/auth-service:V
+          image: 495599739945.dkr.ecr.us-east-1.amazonaws.com/frontend:v4
           ports:
             - containerPort: 3000

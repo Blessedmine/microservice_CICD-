@@ -31,7 +31,7 @@ docker build -t <registry>/<service-name>:<tag> .
 
 Create ecr
 aws ecr create-repository --repository-name service-name
-Push to AWS ECR:
+Push to AWS ECR: 
 docker push <registry>/<service-name>:<tag>
 
 You can also follow the command line on the aws if you are using AWS
@@ -46,8 +46,43 @@ You can also follow the command line on the aws if you are using AWS
 1. **Provision AKS/EKS Cluster**
 - **AWS EKS**:
 ```sh
-eksctl create cluster --name my-cluster --region us-east-1
+eksctl create cluster --name microservice --region us-east-1
 
+To enable and use AWS IAM roles for Kubernetes service accounts on our EKS cluster, we must create & associate OIDC identity provider.
+To do so using eksctl we can use the below command.
+
+eksctl utils associate-iam-oidc-provider \
+    --region us-east-1 \
+    --cluster microservice \
+    --approve
+    
+These add-ons will create the respective IAM policies for us automatically within our Node Group role.
+
+# Create Public Node Group   
+eksctl create nodegroup --cluster=microservice \
+                       --region=us-east-1 \
+                       --name=mg-demo \
+                       --node-type=t3.medium \
+                       --nodes=2 \
+                       --nodes-min=2 \
+                       --nodes-max=4 \
+                       --node-volume-size=20 \
+                       --ssh-access \
+                       --ssh-public-key=pipeline \
+                       --managed \
+                       --asg-access \
+                       --external-dns-access \
+                       --full-ecr-access \
+                       --appmesh-access \
+                       --alb-ingress-access
+
+After the nodes are ready Do:
+  kubectl config get-contexts
+ To know the current context Run:
+  kubectl get nodes
+  kubectl get pods -n kube-system
+  kubectl top pods -n kube-system
+    
 Configure kubectl Access
 For EKS:
  aws eks update-kubeconfig --name <cluster_name> --region <region> 
@@ -64,3 +99,36 @@ Apply RBAC policies if needed.
 Steps:
 1. Create Kubernetes Manifests
 2. Deploy Service
+kubectl apply -f microservice_CICD/frontend/frontend-deployment.yaml
+
+### **2.2 Service Deployment**
+#### **Steps:**
+1. **Create Kubernetes Manifests for the microservices**
+   ```
+2. **Deploy Services**
+   ```sh
+   kubectl apply -f kubernetes/manifests/frontend-deployment.yaml
+   ```  
+
+3. **Configure Ingress**
+- Install **NGINX Ingress Controller**:
+  ```sh
+  helm install ingress-nginx ingress-nginx/ingress-nginx
+  ```  
+- Define `ingress.yaml` for routing.
+
+# Add the Helm repository (if not already added)
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+
+kubectl apply -f ingress.yaml
+
+# Install NGINX Ingress Controller in a dedicated namespace
+helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace --set controller.service.type=LoadBalancer
+
+Check if Helm release exists
+
+helm list -A
+
+kubectl get deployments -n ingress-nginx
+kubectl get pods -n ingress-nginx
