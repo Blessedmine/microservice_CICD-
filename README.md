@@ -132,3 +132,5 @@ helm list -A
 
 kubectl get deployments -n ingress-nginx
 kubectl get pods -n ingress-nginx
+kubectl get ingress -A
+kubectl get svc -n ingress-nginx
