@@ -1,8 +1,9 @@
+# frontend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-service
-  namespace: frontend
+  name: frontend
+  namespace: default
 spec:
   replicas: 2
   selector:
@@ -18,3 +19,16 @@ spec:
           image: 495599739945.dkr.ecr.us-east-1.amazonaws.com/frontend:v4
           ports:
             - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: default
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP
