@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: product-config
-  namespace: microservice
+  name: app-config
+  namespace: default
 data:
-  db-port: "3306"
+  DATABASE_HOST: postgres-service
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: shoppingdb

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: default
+data:
+  DATABASE_HOST: "shopping-db.abc123.us-east-1.rds.amazonaws.com"
+  DATABASE_NAME: "database-1"
+  DATABASE_PORT: "3306"

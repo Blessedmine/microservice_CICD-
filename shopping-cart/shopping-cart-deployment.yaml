@@ -19,6 +19,14 @@ spec:
           image: 495599739945.dkr.ecr.us-east-1.amazonaws.com/shopping-cart:v1
           ports:
             - containerPort: 3002
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
 ---
 apiVersion: v1
 kind: Service
