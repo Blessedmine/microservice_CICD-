@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: shoppingcart-servicemonitor
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: shopping-cart
+  endpoints:
+    - port: http          # must match your shopping-cart Service port name
+      path: /metrics
+      interval: 15s
+  namespaceSelector:
+    matchNames:
+      - default
