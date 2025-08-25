@@ -134,3 +134,50 @@ kubectl get deployments -n ingress-nginx
 kubectl get pods -n ingress-nginx
 kubectl get ingress -A
 kubectl get svc -n ingress-nginx
+
+### **3.1 Scaling & Secrets**
+#### **Steps:**
+1. **Horizontal Pod Autoscaler (HPA)**
+
+2. **Secrets & ConfigMaps**
+- Store secrets:
+  ```sh
+  kubectl create secret generic db-secret --from-literal=password=1234
+  ```  
+- Use ConfigMaps for environment variables.
+
+**Deploy Using ArgoCD**
+- Install ArgoCD:
+  ```sh
+  kubectl create namespace argocd
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  ```  
+  LoadBalancer (if using AWS EKS)
+  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+
+This gives you a public ELB DNS name in AWS.
+
+Get the Admin Password
+
+The initial username is admin.
+Get the auto-generated password:
+
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+Login to ArgoCD CLI
+
+Install argocd CLI (from ArgoCD releases
+), then:
+
+argocd login <ARGOCD_SERVER>
+
+
+Example (if port-forwarding):
+
+argocd login localhost:8080
+
+Create app.yaml and Apply it:
+
+kubectl apply -f app.yaml -n argocd
+
+ArgoCD will now sync your cluster with the Git repo.

@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: delete/v1
 kind: Deployment
 metadata:
   name: frontend
@@ -18,6 +18,32 @@ spec:
           image: 495599739945.dkr.ecr.us-east-1.amazonaws.com/frontend:v4
           ports:
             - containerPort: 3000
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DATABASE_HOST
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DATABASE_NAME
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DATABASE_PORT
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DATABASE_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DATABASE_PASSWORD
           resources:
             requests:
               cpu: "100m"
