@@ -1,5 +1,5 @@
 # shopping-cart-deployment.yaml
-apiVersion: delete/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shopping-cart
