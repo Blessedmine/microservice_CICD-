@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/Blessedmine/microservice_CICD-'
+    repoURL: https://github.com/Blessedmine/microservice_CICD-
     targetRevision: main
     path: shopping-cart/k8s
   destination:
