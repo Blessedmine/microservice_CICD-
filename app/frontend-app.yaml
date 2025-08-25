@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/Blessedmine/microservice_CICD-'
     targetRevision: main
-    path: frontend/k8s
+    path: Frontend/k8s
   destination:
     server: https://kubernetes.default.svc
     namespace: default
