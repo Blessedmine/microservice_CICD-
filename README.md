@@ -181,3 +181,5 @@ Create app.yaml and Apply it:
 kubectl apply -f app.yaml -n argocd
 
 ArgoCD will now sync your cluster with the Git repo.
+
+Observability & Cleanup
