@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/Blessedmine/microservice_CICD-'
     targetRevision: main
-    path: Frontend
+    path: Frontend/k8s
     directory:
       recurse: true
       include: '*.yaml'
