@@ -53,16 +53,3 @@ spec:
             limits:
               cpu: "500m"
               memory: "512Mi"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: shopping-service
-  namespace: default
-spec:
-  selector:
-    app: shopping-cart
-  ports:
-    - port: 80
-      targetPort: 3002
-  type: ClusterIP
