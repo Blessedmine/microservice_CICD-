@@ -5,9 +5,9 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    apiVersion: delete/v1
+    apiVersion: apps/v1
     kind: Deployment
-    name: product   # must match your deployment name
+    name: product   # must match your Deployment metadata.name
   minReplicas: 2
   maxReplicas: 5
   metrics:

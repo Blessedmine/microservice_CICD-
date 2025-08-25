@@ -9,6 +9,9 @@ spec:
     repoURL: 'https://github.com/Blessedmine/microservice_CICD-'
     targetRevision: main
     path: shopping-cart
+    directory:
+      recurse: true
+      include: '*.yaml'
   destination:
     server: https://kubernetes.default.svc
     namespace: default
