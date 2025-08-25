@@ -183,3 +183,33 @@ kubectl apply -f app.yaml -n argocd
 ArgoCD will now sync your cluster with the Git repo.
 
 Observability & Cleanup
+Phase 4: Observability & Cleanup
+Install Prometheus & Grafana
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+kubectl create namespace monitoring
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring
+
+Access Grafana
+kubectl get svc -n monitoring
+kubectl port-forward svc/monitoring-grafana -n monitoring 3000:80
+
+
+Default login:
+
+Username: admin
+
+Password:
+
+kubectl get secret monitoring-grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+Import dashboards for CPU, memory, and pod metrics.
+
+References
+
+https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html
+
+https://argo-cd.readthedocs.io/
+
+https://github.com/prometheus-community/helm-charts
