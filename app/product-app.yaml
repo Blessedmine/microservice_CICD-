@@ -9,9 +9,6 @@ spec:
     repoURL: 'https://github.com/Blessedmine/microservice_CICD-'
     targetRevision: main
     path: Product/k8s
-    directory:
-      recurse: true
-      include: '*.yaml'
   destination:
     server: https://kubernetes.default.svc
     namespace: default
